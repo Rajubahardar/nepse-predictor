@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEPSE Stock Predictor</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 NEPSE Stock Predictor</h1>
+            <p>AI-Powered Predictions for NABIL Bank</p>
+            <div class="status-badge" id="status">🟢 Online</div>
+        </header>
+
+        <section class="dashboard">
+            <div class="card stat-card">
+                <div class="stat-label">Current Price</div>
+                <div class="stat-value" id="current-price">₹--</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-label">Predicted Price</div>
+                <div class="stat-value" id="predicted-price">₹--</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-label">Expected Change</div>
+                <div class="stat-value" id="change">--</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-label">Accuracy</div>
+                <div class="stat-value" id="accuracy">--%</div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🔮 24-Day Forecast</h2>
+            <div id="predictions-container">
+                <div class="loading">Loading predictions...</div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📊 Price Chart</h2>
+            <canvas id="predictionChart"></canvas>
+        </section>
+
+        <section class="card">
+            <h2>📋 Monthly Report</h2>
+            <div id="report-container">
+                <div class="loading">Generating report...</div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Predictions updated daily | <span id="last-updated">Loading...</span></p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
