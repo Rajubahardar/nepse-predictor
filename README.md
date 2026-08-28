@@ -10,46 +10,24 @@
 
 ---
 
-## 📖 Table of Contents
-
-- [🌟 Features](#-features)
-- [🚀 Live Demo](#-live-demo)
-- [🏗️ System Architecture](#️-system-architecture)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [📊 API Endpoints](#-api-endpoints)
-- [📈 Performance Metrics](#-performance-metrics)
-- [🚀 Quick Start](#-quick-start)
-- [📁 Project Structure](#-project-structure)
-- [🔧 Environment Variables](#-environment-variables)
-- [📊 Monthly Accuracy Report](#-monthly-accuracy-report)
-- [🤝 Contributing](#-contributing)
-- [📝 License](#-license)
-- [👨‍💻 Author](#-author)
-- [🙏 Acknowledgments](#-acknowledgments)
-- [⭐ Support](#-support)
-
----
-
 ## 🌟 Features
 
-| Feature | Description |
-|---------|-------------|
-| 🤖 **AI Predictions** | Fine-tuned Kronos model for NABIL stock predictions |
-| 📊 **24-Day Forecast** | Get predictions for the next 24 trading days |
-| 🎯 **Accuracy Tracking** | Monitor prediction accuracy in real-time (65.2% direction accuracy) |
-| 📋 **Monthly Reports** | Generate detailed performance reports with Buy/Hold/Sell recommendations |
-| 🌐 **Live Dashboard** | Beautiful, responsive web interface |
-| 📱 **Mobile Friendly** | Access from any device |
-| 🚀 **24/7 Availability** | Deployed on Render with free tier hosting |
+- 🤖 **AI Predictions** - Fine-tuned Kronos model for NABIL stock predictions
+- 📊 **24-Day Forecast** - Get predictions for the next 24 trading days
+- 🎯 **Accuracy Tracking** - Monitor prediction accuracy in real-time (65.2% direction accuracy)
+- 📋 **Monthly Reports** - Generate detailed performance reports with Buy/Hold/Sell recommendations
+- 🌐 **Live Dashboard** - Beautiful, responsive web interface
+- 📱 **Mobile Friendly** - Access from any device
+- 🚀 **24/7 Availability** - Deployed on Render with free tier hosting
 
 ---
 
 ## 🚀 Live Demo
 
-### 🌐 Access the live application:
-**[https://nepse-predictor-0b9x.onrender.com](https://nepse-predictor-0b9x.onrender.com)**
+**Access the live application:** 
+👉 **[https://nepse-predictor-0b9x.onrender.com](https://nepse-predictor-0b9x.onrender.com)**
 
-### 📊 What You'll See:
+### What You'll See:
 - 💰 Current price: ₹794.33
 - 📈 Predicted change: +1.08%
 - 🎯 Accuracy: 65.2%
@@ -59,4 +37,55 @@
 
 ---
 
-## 🏗️ System Architecture
+## 🛠️ Tech Stack
+
+### Backend
+- **Flask 3.1.3** - Lightweight web framework
+- **Flask-CORS 6.0.5** - Cross-origin resource sharing
+- **Python 3.11+** - Programming language
+
+### AI/ML
+- **Kronos** - Time-series foundation model
+- **Fine-tuned Tokenizer** - Custom NEPSE data tokenizer
+
+### Frontend
+- **HTML5** - Structure
+- **CSS3** - Styling with dark theme
+- **JavaScript** - Interactivity and API calls
+
+### Deployment
+- **Render** - Cloud hosting (free tier)
+- **GitHub** - Version control
+
+---
+
+## 📊 API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Homepage dashboard |
+| `/api/predict` | GET | Get 24-day price predictions |
+| `/api/accuracy` | GET | Get prediction accuracy metrics |
+| `/api/monthly_report` | GET | Get monthly performance report |
+| `/api/health` | GET | Health check endpoint |
+
+### Example API Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "predictions": [
+      {
+        "date": "2026-08-29",
+        "open": 796.51,
+        "high": 801.77,
+        "low": 789.94,
+        "close": 795.56,
+        "volume": 23456
+      }
+    ],
+    "last_price": 794.33,
+    "generated_at": "2026-08-28T23:00:00"
+  }
+}
