@@ -1,7 +1,4 @@
-﻿"""
-NEPSE Stock Predictor - Simplified for Render
-"""
-from flask import Flask, jsonify, render_template_string
+﻿from flask import Flask, jsonify, render_template_string
 from flask_cors import CORS
 import os
 import random
@@ -30,7 +27,7 @@ def generate_predictions():
 
 @app.route('/')
 def home():
-    html = """
+    html = '''
     <!DOCTYPE html>
     <html>
     <head>
@@ -40,11 +37,15 @@ def home():
             h1 { color: #00d4ff; font-size: 3em; }
             .price { font-size: 4em; color: #00ff88; }
             .positive { color: #00ff88; }
-            .negative { color: #ff4444; }
-            .container { max-width: 800px; margin: 0 auto; }
             .status { display: inline-block; padding: 10px 20px; background: #00ff88; color: #0a0e17; border-radius: 20px; font-weight: bold; margin: 20px 0; }
             .links { margin-top: 40px; }
-            .links a { color: #00d4ff; text-decoration: none; margin: 0 15px; }
+            .links a { color: #00d4ff; text-decoration: none; margin: 0 15px; padding: 10px 20px; border: 1px solid #00d4ff; border-radius: 8px; }
+            .links a:hover { background: #00d4ff; color: #0a0e17; }
+            .container { max-width: 800px; margin: 0 auto; }
+            .footer { color: #666; margin-top: 50px; font-size: 0.9rem; }
+            table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+            th, td { padding: 8px; border-bottom: 1px solid #333; }
+            th { color: #00d4ff; }
         </style>
     </head>
     <body>
@@ -60,13 +61,13 @@ def home():
                 <a href="/api/health">💚 Health Check</a>
                 <a href="https://github.com/Rajubahardar/nepse-predictor">📂 GitHub</a>
             </div>
-            <p style="color: #666; margin-top: 50px; font-size: 0.9rem;">
+            <div class="footer">
                 Powered by Kronos AI | Updated Daily
-            </p>
+            </div>
         </div>
     </body>
     </html>
-    """
+    '''
     return render_template_string(html)
 
 @app.route('/api/predict')
@@ -78,8 +79,7 @@ def get_predictions():
             'generated_at': datetime.now().isoformat(),
             'last_price': BASE_PRICE,
             'last_date': datetime.now().strftime('%Y-%m-%d')
-        },
-        'cached': False
+        }
     })
 
 @app.route('/api/accuracy')
@@ -107,7 +107,8 @@ def get_report():
                 'mae': 15.23,
                 'mape': 2.1
             },
-            'recommendation': 'Buy'
+            'recommendation': 'Buy',
+            'report_generated': datetime.now().isoformat()
         }
     })
 
@@ -117,9 +118,10 @@ def health():
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
         'version': '2.0.0',
-        'platform': 'Render'
+        'platform': 'Render',
+        'server': 'running'
     })
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 10000))
     app.run(debug=False, host='0.0.0.0', port=port)
