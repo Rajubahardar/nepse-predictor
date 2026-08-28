@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEPSE Stock Predictor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e17, #1a2332);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #1a2332, #0d1520);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p { color: #8899aa; margin-top: 10px; font-size: 1.1rem; }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .badge.success { background: #00ff88; color: #0a0e17; }
+        .badge.warning { background: #ffaa00; color: #0a0e17; }
+        .badge.danger { background: #ff4444; color: #fff; }
+        
+        .card {
+            background: rgba(26, 35, 50, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+        .card h3 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat {
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.05);
+        }
+        .stat .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        .stat .label {
+            color: #8899aa;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .stat .change.positive { color: #00ff88; }
+        .stat .change.negative { color: #ff4444; }
+        
+        .recommendation {
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .recommendation.buy { background: #00ff88; color: #0a0e17; }
+        .recommendation.hold { background: #ffaa00; color: #0a0e17; }
+        .recommendation.sell { background: #ff4444; color: #fff; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        th { color: #00d4ff; font-weight: bold; }
+        tr:hover { background: rgba(0, 212, 255, 0.05); }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #8899aa;
+        }
+        .loading .spinner {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #00d4ff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📈 NEPSE Stock Predictor</h1>
+            <p>NABIL Bank Limited - AI-Powered Predictions</p>
+            <span class="badge success" id="status">🟢 Online</span>
+        </div>
+
+        <div class="card">
+            <h3>📊 Dashboard</h3>
+            <div class="grid" id="dashboard">
+                <div class="stat">
+                    <div class="value" id="current-price">--</div>
+                    <div class="label">Current Price (₹)</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="predicted-price">--</div>
+                    <div class="label">Predicted Price (₹)</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="change">--</div>
+                    <div class="label">Expected Change</div>
+                </div>
+                <div class="stat">
+                    <div class="value" id="accuracy">--%</div>
+                    <div class="label">Direction Accuracy</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🔮 24-Day Forecast</h3>
+            <div id="predictions-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading predictions...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Monthly Report</h3>
+            <div id="report-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Generating report...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Predictions updated daily | Last updated: <span id="last-updated">Loading...</span></p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '';
+
+        async function fetchData() {
+            try {
+                const [predRes, accRes, reportRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/predict?symbol=NABIL&days=24`),
+                    fetch(`${API_BASE}/api/accuracy?symbol=NABIL`),
+                    fetch(`${API_BASE}/api/monthly_report?symbol=NABIL`)
+                ]);
+
+                const predData = await predRes.json();
+                const accData = await accRes.json();
+                const reportData = await reportRes.json();
+
+                if (predData.success) displayPredictions(predData.data);
+                if (accData.success) displayAccuracy(accData.data);
+                if (reportData.success) displayReport(reportData.data);
+
+                document.getElementById('last-updated').textContent = new Date().toLocaleString();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('status').textContent = '🔴 Offline';
+                document.getElementById('status').className = 'badge danger';
+            }
+        }
+
+        function displayPredictions(data) {
+            const predictions = data.predictions || [];
+            const lastPrice = data.last_price || 0;
+
+            document.getElementById('current-price').textContent = lastPrice.toFixed(2);
+
+            if (predictions.length > 0) {
+                const predPrice = predictions[0].close || 0;
+                document.getElementById('predicted-price').textContent = predPrice.toFixed(2);
+
+                const change = ((predPrice - lastPrice) / lastPrice * 100);
+                const changeEl = document.getElementById('change');
+                changeEl.textContent = (change > 0 ? '+' : '') + change.toFixed(2) + '%';
+                changeEl.className = 'value ' + (change > 0 ? 'positive' : 'negative');
+            }
+
+            let html = `<table><thead><tr>
+                <th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th>
+            </tr></thead><tbody>`;
+
+            predictions.slice(0, 24).forEach(p => {
+                html += `<tr>
+                    <td>${p.date || p.timestamps || '--'}</td>
+                    <td>${(p.open || 0).toFixed(2)}</td>
+                    <td>${(p.high || 0).toFixed(2)}</td>
+                    <td>${(p.low || 0).toFixed(2)}</td>
+                    <td><strong>${(p.close || 0).toFixed(2)}</strong></td>
+                    <td>${(p.volume || 0).toLocaleString()}</td>
+                </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            document.getElementById('predictions-container').innerHTML = html;
+        }
+
+        function displayAccuracy(data) {
+            const dirAcc = data.direction_accuracy || 0;
+            document.getElementById('accuracy').textContent = dirAcc.toFixed(1) + '%';
+
+            const statusEl = document.getElementById('status');
+            if (dirAcc > 60) {
+                statusEl.textContent = '🟢 Good Accuracy';
+                statusEl.className = 'badge success';
+            } else if (dirAcc > 50) {
+                statusEl.textContent = '🟡 Moderate Accuracy';
+                statusEl.className = 'badge warning';
+            } else {
+                statusEl.textContent = '🔴 Poor Accuracy';
+                statusEl.className = 'badge danger';
+            }
+        }
+
+        function displayReport(data) {
+            const summary = data.summary || {};
+            const recommendation = data.recommendation || 'Hold';
+
+            let html = `
+                <div class="grid">
+                    <div class="stat">
+                        <div class="value">${data.month || '--'}</div>
+                        <div class="label">Month</div>
+                    </div>
+                    <div class="stat">
+                        <div class="value">${(summary.mae || 0).toFixed(2)}</div>
+                        <div class="label">MAE (₹)</div>
+                    </div>
+                    <div class="stat">
+                        <div class="value">${(summary.mape || 0).toFixed(2)}%</div>
+                        <div class="label">MAPE</div>
+                    </div>
+                    <div class="stat">
+                        <div class="value">${(summary.direction_accuracy || 0).toFixed(1)}%</div>
+                        <div class="label">Direction Accuracy</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <span class="recommendation ${recommendation.toLowerCase()}">
+                        🎯 ${recommendation}
+                    </span>
+                </div>
+            `;
+
+            document.getElementById('report-container').innerHTML = html;
+        }
+
+        // Initial fetch
+        fetchData();
+
+        // Refresh every 5 minutes
+        setInterval(fetchData, 300000);
+    </script>
+</body>
+</html>
