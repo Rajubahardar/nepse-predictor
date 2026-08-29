@@ -1,0 +1,202 @@
+:root {
+    --bg-deep: #0a3d91; 
+    --bg-light: #1a5cb5; 
+    --text-main: #ffffff;
+    --text-muted: #d0dcf0;
+    --up-color: #4ade80; 
+    --down-color: #f87171; 
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+body {
+    background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-light) 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
+    gap: 20px;
+}
+.sidebar {
+    width: 280px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+.logo {
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    color: var(--bg-deep);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+.brand-text h2 { font-size: 16px; font-weight: 600; }
+.brand-text p { font-size: 12px; color: var(--text-muted); }
+.nav-group { margin-bottom: 20px; }
+.nav-group h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+.nav-group a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+.nav-group a:hover, .nav-group a.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-left: 3px solid #ffffff;
+}
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.top-nav {
+    display: flex;
+    gap: 20px;
+}
+.top-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.chip {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.btn-white {
+    background: #ffffff;
+    color: var(--bg-deep);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.hero {
+    max-width: 800px;
+}
+.tagline {
+    background: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.hero h1 {
+    font-size: 56px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.hero h1 .highlight {
+    color: #bce0ff; 
+}
+.hero-desc {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 60px;
+}
+.btn-primary {
+    background: #ffffff;
+    color: var(--bg-deep);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid var(--text-muted);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.card h3 {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.card p {
+    font-size: 24px;
+    font-weight: 700;
+}
+.up { color: var(--up-color); }
+.down { color: var(--down-color); }
