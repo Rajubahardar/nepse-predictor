@@ -28,9 +28,9 @@
 👉 **[https://nepse-predictor-0b9x.onrender.com](https://nepse-predictor-0b9x.onrender.com)**
 
 ### What You'll See:
-- 💰 Current price: ₹794.33
-- 📈 Predicted change: +1.08%
-- 🎯 Accuracy: 65.2%
+- 💰 Current price:
+- 📈 Predicted change: 
+- 🎯 Accuracy: 
 - 📋 24-Day forecast table
 - 📊 Interactive price chart
 - 💡 Buy/Hold/Sell recommendations
