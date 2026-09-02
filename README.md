@@ -69,23 +69,6 @@
 | `/api/monthly_report` | GET | Get monthly performance report |
 | `/api/health` | GET | Health check endpoint |
 
-### Example API Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "predictions": [
-      {
-        "date": "2026-08-29",
-        "open": 796.51,
-        "high": 801.77,
-        "low": 789.94,
-        "close": 795.56,
-        "volume": 23456
-      }
-    ],
-    "last_price": 794.33,
     "generated_at": "2026-08-28T23:00:00"
   }
 }
