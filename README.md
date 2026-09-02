@@ -59,16 +59,3 @@
 
 ---
 
-## 📊 API Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | Homepage dashboard |
-| `/api/predict` | GET | Get 24-day price predictions |
-| `/api/accuracy` | GET | Get prediction accuracy metrics |
-| `/api/monthly_report` | GET | Get monthly performance report |
-| `/api/health` | GET | Health check endpoint |
-
-    "generated_at": "2026-08-28T23:00:00"
-  }
-}
